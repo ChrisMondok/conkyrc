@@ -1,0 +1,79 @@
+background no
+
+use_xft yes
+
+# default font
+xftfont Kontrapunkt:size=16
+draw_shades no
+draw_outline no
+
+# font alpha
+xftalpha 0.5
+
+update_interval 1
+
+# Run forever
+total_run_times 0
+
+cpu_avg_samples 2
+
+double_buffer yes
+
+# window dimensions
+minimum_size 420 550
+
+# set default colors
+default_color FFFFFF
+default_shade_color black
+#default_outline_color F79A42 #(orange)
+default_outline_color 444444
+
+# own window options
+own_window		yes
+own_window_argb_visual	yes
+own_window_transparent	yes
+own_window_type		desktop
+own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
+own_window_title	conky
+own_window_class	conky
+
+# Alignment
+alignment bottom_right
+
+# Gap between borders of screen and text
+# same thing as passing -x at command line
+#gap_x 1348
+gap_x 0
+gap_y -96
+
+border_inner_margin 0
+border_outer_margin 0
+
+# Add spaces to keep things from moving about?  This only affects certain objects.
+use_spacer right
+
+# border_size 0
+draw_borders no
+
+# colours
+color1 D4D4D4
+color2 F79A42
+color3 000000
+
+#LUA stuff
+lua_load ~/.conky/meter.lua
+lua_draw_hook_pre draw_meter
+
+# stuff after 'TEXT' will be formatted on screen
+
+#${if_mpd_playing}${font Kontrapunkt:size=16}$alignr${offset -8}$mpd_smart
+#${alignr}${offset -8}${mpd_bar 12, 264}
+#$alignr${offset -8}$mpd_status$else${voffset 23}
+#${endif}
+TEXT
+${font Kontrapunkt:size=16}${if_empty ${execi 3600 pacman -Qu}}${else}${alignr}${color2}${font Radio Space, Bold:size=16}${execi 3600 pacman -Qu | wc -l} ${color1}${font Kontrapunkt:size=16}updates available ${endif}
+${font}${voffset -105}
+${color2}${font Radio Space, Bold:size=175}${alignc}:
+${color1}${font Radio Space, Bold:size=175}${alignr}${offset -210}${voffset -235}${time %l}
+${color1}${font Radio Space, Bold:size=100}${offset 250}${voffset -325}${time %M}
+${font Radio Space:size=45}${alignc}${offset 125}${voffset -100}${color2}${time %m}${color1}.${color2}${time %d}
